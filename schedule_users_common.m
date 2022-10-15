@@ -91,7 +91,7 @@ function [attached_UEs, the_RB_grid,TB_size_bit,num_assigned_RB,assigned_RB] = s
                         TB_size_bits = max(8*round(1/8*(the_RB_grid.sym_per_RB_nosync .* num_assigned_RB .* modulation_order .* coding_rate*2))-24,0);
                     else % TB with sync symbols
                         sync_pos = false(size(the_RB_grid.user_allocation));
-                        sync_pos(floor(length(sync_pos)/2)-2:floor(length(sync_pos)/2)+3) = true;
+                        sync_pos(floor(length(sync_pos)/2)-1:floor(length(sync_pos)/2)+3) = true;
                         sync_RBs = sum((the_RB_grid.user_allocation==attached_UEs(u_).UE_ID) .* sync_pos);
                         non_sync_RBs = sum(the_RB_grid.user_allocation==attached_UEs(u_).UE_ID)-sync_RBs;
                         TB_size_bits = max(8*round(1/8*(the_RB_grid.sym_per_RB_sync .* sync_RBs + the_RB_grid.sym_per_RB_nosync * non_sync_RBs) .* modulation_order .* coding_rate*2)-24,0);
