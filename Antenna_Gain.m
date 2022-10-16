@@ -1,4 +1,4 @@
-function ant_gain = Antenna_Gain(antenna_type,eNBs_layout,VUEs_layout,N_block,N_PRBs)
+function ant_gain = Antenna_Gain(antenna_type,eNBs_layout,VUEs_layout,N_block,N_PRBs,max_antenna_gain)
 
 nbs=size(eNBs_layout,1);
 nue=size(VUEs_layout,1);
@@ -17,7 +17,7 @@ ue_doa=180/pi*ue_doa;
 % calculate UE-MBS antenna gain
 ant_gain=zeros(nue,nbs);
 if strcmp(antenna_type,'3GPP_Azimuth')
-    ant_gain(:,1:nbs)=reshape(repmat(15-min(12*(ue_doa(:)/65).^2,20),n_block,1),nue,nbs);
+    ant_gain(:,1:nbs)=reshape(repmat(max_antenna_gain-min(12*(ue_doa(:)/65).^2,20),n_block,1),nue,nbs);
 end
 
 % % calculate UE-FBS antenna gain
