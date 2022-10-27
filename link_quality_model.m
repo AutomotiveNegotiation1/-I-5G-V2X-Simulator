@@ -1,4 +1,4 @@
-function [obj, link_quality_model_out,wide_interference,cooperation_rules,SNIR_wide] = link_quality_model(cooperation_rules,attached_eNodeB,time,user_shadow_fading_loss_dB,user_macroscopic_pathloss_dB,UE,RB_grid,ff_trace,starting_point,interfering_starting_points,thermal_noise_W_RB,CQI_mapper,interfering_shadow_fading_loss_dB,interfering_macroscopic_pathloss_eNodeB_dB,interfering_enodeB_id,TTI_counter,CoMP,ICIC,comp_sites)
+function [obj, link_quality_model_out,wide_interference,cooperation_rules,SNIR_wide] = link_quality_model(cooperation_rules,attached_eNodeB,time,user_shadow_fading_loss_dB,user_macroscopic_pathloss_dB,UE,RB_grid,ff_trace,starting_point,interfering_starting_points,thermal_noise_W_RB,CQI_mapper,interfering_shadow_fading_loss_dB,interfering_macroscopic_pathloss_eNodeB_dB,interfering_enodeB_id,TTI_counter,CoMP,ICIC,comp_sites,BBW)
         
             % Get current time
             t = time;
@@ -248,33 +248,52 @@ function [obj, link_quality_model_out,wide_interference,cooperation_rules,SNIR_w
         end   
             
             %%
-                        if (CoMP==1)&&(ICIC==1)
-            SNIR_wide = obj.wideband_SINR;
-            interference=fopen('interference.txt','at');
-            fprintf(interference,'%f\n',wide_interference);
-            fclose(interference);
-            
-             wideband_snir=fopen('wide_snir.txt','at');
-            fprintf(wideband_snir,'%f\n',obj.wideband_SINR);
-            fclose(wideband_snir);
-            elseif (ICIC==1)&&(CoMP==0)
+            if (CoMP==1)&&(ICIC==1)&&(BBW==1)
                 SNIR_wide = obj.wideband_SINR;
-            interference=fopen('nocomp_interference.txt','at');
-            fprintf(interference,'%f\n',wide_interference);
-            fclose(interference);
-            
-             wideband_snir=fopen('nocomp_wide_snir.txt','at');
-            fprintf(wideband_snir,'%f\n',obj.wideband_SINR);
-            fclose(wideband_snir);
+                interference=fopen('5G_interference.txt','at');
+                fprintf(interference,'%f\n',wide_interference);
+                fclose(interference);
+                
+                wideband_snir=fopen('5G_wide_snir.txt','at');
+                fprintf(wideband_snir,'%f\n',obj.wideband_SINR);
+                fclose(wideband_snir);
+            elseif (ICIC==1)&&(CoMP==0)&&(BBW==1)
+                SNIR_wide = obj.wideband_SINR;
+                interference=fopen('5G_nocomp_interference.txt','at');
+                fprintf(interference,'%f\n',wide_interference);
+                fclose(interference);
+                
+                wideband_snir=fopen('5G_nocomp_wide_snir.txt','at');
+                fprintf(wideband_snir,'%f\n',obj.wideband_SINR);
+                fclose(wideband_snir);
+            elseif (ICIC==0)&&(CoMP==0)&&(BBW==0)
+                SNIR_wide = obj.wideband_SINR;
+                interference=fopen('5G_w.o_interference.txt','at');
+                fprintf(interference,'%f\n',wide_interference);
+                fclose(interference);
+                
+                wideband_snir=fopen('5G_w.o_wide_snir.txt','at');
+                fprintf(wideband_snir,'%f\n',obj.wideband_SINR);
+                fclose(wideband_snir);
+                
+            elseif (ICIC==0)&&(CoMP==1)&&(BBW==0)
+                SNIR_wide = obj.wideband_SINR;
+                interference=fopen('5G_noicic_interference.txt','at');
+                fprintf(interference,'%f\n',wide_interference);
+                fclose(interference);
+                
+                wideband_snir=fopen('5G_noicic_wide_snir.txt','at');
+                fprintf(wideband_snir,'%f\n',obj.wideband_SINR);
+                fclose(wideband_snir);
             else
-                SNIR_wide = obj.wideband_SINR;
-            interference=fopen('w.o_interference.txt','at');
-            fprintf(interference,'%f\n',wide_interference);
-            fclose(interference);
-            
-             wideband_snir=fopen('w.o_wide_snir.txt','at');
-            fprintf(wideband_snir,'%f\n',obj.wideband_SINR);
-            fclose(wideband_snir);
+                 SNIR_wide = obj.wideband_SINR;
+                interference=fopen('5G_nodynamic_interference.txt','at');
+                fprintf(interference,'%f\n',wide_interference);
+                fclose(interference);
+                
+                wideband_snir=fopen('5G_dynamic_wide_snir.txt','at');
+                fprintf(wideband_snir,'%f\n',obj.wideband_SINR);
+                fclose(wideband_snir);
             end
             
             % Calculate and save feedback, as well as the measured SINRs
