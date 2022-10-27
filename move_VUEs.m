@@ -2,6 +2,8 @@ function VUE_layout = move_VUEs(VUE_layout,roi_x,roi_y,ISD,current_TTI,UEs,dista
 some_UE_out_of_ROI_this_TTI = false;
 % num_of_LTE_R_UEs=1;
  simulation_time_tti=TTI_MAX;
+ 
+ distance = distance*1000;
  for i= 1:size (distance,1)
     
  distance_to_PS_LTE_eNodeB(i) = distance(i);
