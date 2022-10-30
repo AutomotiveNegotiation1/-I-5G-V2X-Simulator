@@ -11,7 +11,7 @@
            end
            grid on;
            xlabel('SNR [dB]');
-           ylabel('BLER');
-           title(['LTE BLER for CQIs ' num2str(initial_cqi) ' to ' num2str(final_cqi)]);
+           ylabel('PER');
+           title(['5G PER for CQIs ' num2str(initial_cqi) ' to ' num2str(final_cqi)]);
            legend('Location','SouthEastOutside');
        end
